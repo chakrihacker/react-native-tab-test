@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  rn: chakrihacker/react-native@1.2.8
+  rn: chakrihacker/react-native@1.2.9
 
 jobs:
   checkout_code:
@@ -48,6 +48,7 @@ workflows:
       #       - analyse_example
       - rn/android_build:
           name: build_android_release
+          project_path: "example/android"
           build_type: release
           working_dir: example
           requires:
