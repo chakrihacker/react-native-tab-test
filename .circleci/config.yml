@@ -29,7 +29,7 @@ jobs:
     steps:
       - rn/yarn_install
   android_build:
-    executor: rn/android_release
+    executor: rn/android_build
     working_directory: ~/project/example
     steps:
       - rn/android_build:
