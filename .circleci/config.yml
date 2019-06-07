@@ -62,7 +62,7 @@ workflows:
           detox_configuration: "android.emu.release"
           detox_loglevel: "trace"
           requires:
-            - build_android_release
+            - android_build
             - analyse_example
       - rn/ios_build_and_test:
           project_path: "example/ios/example.xcodeproj"
