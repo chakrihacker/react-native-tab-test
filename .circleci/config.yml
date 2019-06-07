@@ -1,0 +1,73 @@
+version: 2.1
+
+orbs:
+  rn: chakrihacker/react-native@1.2.5
+
+jobs:
+  checkout_code:
+    executor: rn/linux_js
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: .
+          paths: .
+  analyse_js:
+    executor: rn/linux_js
+    steps:
+      - attach_workspace:
+          at: .
+      - rn/yarn_install
+      # - run:
+      #     name: Lint check
+      #     command: yarn run lint
+      # - run:
+      #     name: Typecheck
+      #     command: yarn run typescript
+  analyse_example:
+    executor: rn/linux_js
+    working_directory: ~/project/example
+    steps:
+      - rn/yarn_install
+
+workflows:
+  test:
+    jobs:
+      - checkout_code
+      - analyse_js:
+          requires:
+            - checkout_code
+      - analyse_example:
+          requires:
+            - checkout_code
+      # - rn/android_build:
+      #     name: build_android_debug
+      #     build_type: debug
+      #     working_directory: example
+      #     requires:
+      #       - analyse_js
+      #       - analyse_example
+      - rn/android_build:
+          name: build_android_release
+          build_type: release
+          working_directory: example
+          requires:
+            - analyse_js
+            - analyse_example
+      - rn/android_test:
+          detox_configuration: "android.emu.release"
+          detox_loglevel: "trace"
+          requires:
+            - build_android_release
+            - analyse_example
+      - rn/ios_build_and_test:
+          project_path: "example/ios/example.xcodeproj"
+          derived_data_path: "example/ios/build"
+          device: "iPhone Xs"
+          build_configuration: "Release"
+          scheme: "example"
+          detox_configuration: "ios.sim.release"
+          detox_loglevel: "trace"
+          requires:
+            - analyse_js
+            - analyse_example
+
