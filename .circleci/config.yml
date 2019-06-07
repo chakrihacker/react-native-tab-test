@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  rn: chakrihacker/react-native@1.2.9
+  rn: react-native-community/react-native@1.2.1
 
 jobs:
   checkout_code:
