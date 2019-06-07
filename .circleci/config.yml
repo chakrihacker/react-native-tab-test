@@ -28,6 +28,13 @@ jobs:
     working_directory: ~/project/example
     steps:
       - rn/yarn_install
+  android_build:
+    working_directory: ~/project/example
+    steps:
+      - rn/android_release:
+          name: build_android_release
+          project_path: "android"
+          build_type: release
 
 workflows:
   test:
@@ -46,11 +53,7 @@ workflows:
       #     requires:
       #       - analyse_js
       #       - analyse_example
-      - rn/android_build:
-          name: build_android_release
-          project_path: "example/android"
-          build_type: release
-          working_dir: example
+      - android_build:
           requires:
             - analyse_js
             - analyse_example
