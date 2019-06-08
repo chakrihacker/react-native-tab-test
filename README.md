@@ -1,5 +1,7 @@
 # React Native Tab View
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chakrihacker/react-native-tab-test.svg)](https://greenkeeper.io/)
+
 [![Build Status][build-badge]][build]
 [![Version][version-badge]][package]
 [![MIT License][license-badge]][license]
